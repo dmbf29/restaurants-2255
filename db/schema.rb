@@ -15,6 +15,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_12_002459) do
     t.string "address"
     t.datetime "created_at", null: false
     t.string "name"
+    t.admin "boolean"
     t.integer "rating"
     t.datetime "updated_at", null: false
   end

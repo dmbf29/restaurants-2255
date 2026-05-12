@@ -1,0 +1,63 @@
+class RestaurantsController < ApplicationController
+  # '/restaurants'
+  def index
+    @restaurants = Restaurant.all
+    # render 'index.html.erb'
+  end
+
+  # "/restaurants/1"
+  def show
+    # we get the id from the url and into the params
+    @restaurant = Restaurant.find(params[:id])
+  end
+
+  # '/restaurants/new'
+  def new
+    # empty instance JUST for the form builder
+    @restaurant = Restaurant.new
+    # render 'index.html.erb'
+  end
+
+  # Post request -> this has to come from a form
+  # NO VIEW
+  def create
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      redirect_to restaurant_path(@restaurant)
+    else
+      # redirect_to new_restaurant_path => went to another place and with an empty restaurant
+      render :new, status: :unprocessable_entity # stays with the errored restaurant and builds a form with that
+    end
+  end
+
+  # '/restaurant/1/edit'
+  def edit
+    # instance JUST for the form builder
+    @restaurant = Restaurant.find(params[:id])
+  end
+
+  # Patch request -> this has to come from a form
+  # NO VIEW
+  def update
+    @restaurant = Restaurant.find(params[:id])
+    if @restaurant.update(restaurant_params)
+      redirect_to restaurant_path(@restaurant)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # we can't trigger this from a url, we have to click a delete link
+  def destroy
+    @restaurant = Restaurant.find(params[:id])
+    @restaurant.destroy
+    redirect_to restaurants_path, status: :see_other
+  end
+
+  private
+
+  def restaurant_params
+    # Strong params -> whitelisting the attributes a user can give us
+    params.require(:restaurant).permit(:name, :address, :rating)
+  end
+end
