@@ -15,7 +15,7 @@ class RestaurantsController < ApplicationController
   def new
     # empty instance JUST for the form builder
     @restaurant = Restaurant.new
-    # render 'index.html.erb'
+    # render 'new.html.erb'
   end
 
   # Post request -> this has to come from a form
