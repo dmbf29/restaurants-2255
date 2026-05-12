@@ -64,5 +64,8 @@ end
 
 
 # Custom Added
+gem "bootstrap", "~> 5.3"
 gem "faker"
+gem "font-awesome-sass", "~> 6.1"
+gem "sassc-rails"
 gem "simple_form"
