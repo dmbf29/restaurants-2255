@@ -1,34 +1,25 @@
 Rails.application.routes.draw do
-  # http_verb '/path', to: 'controller#action', as: :prefix (aka nickname)
-  # The prefix ONLY refers to the path (not the http verb)
-  # get, post, path, delete
-
-  # CRUD
-  # Read all
-  get "/restaurants", to: "restaurants#index", as: :restaurants
-
-  # Create
-  # we need one action just for the form
-  get "/restaurants/new", to: "restaurants#new", as: :new_restaurant
-  # we need one action to receive the form data and create the instance
-  post "/restaurants", to: "restaurants#create"
-
-  # Read one
-  get "/restaurants/:id", to: "restaurants#show", as: :restaurant
-
-  # Update
-  # we need one action just for the form
-  get "/restaurants/:id/edit", to: "restaurants#edit", as: :edit_restaurant
-  # we need one action to receive the form data and update the instance
-  patch "/restaurants/:id", to: "restaurants#update"
-
-  # Destroy
-  delete "/restaurants/:id", to: "restaurants#destroy"
+  # Resources is ONLY for CRUD routes
+  resources :restaurants do
+    resources :reviews, only: [ :new, :create ]
+  end
+  resources :reviews, only: [ :destroy ]
 end
+# Stay organized in our routing and group our routes together
+# collection -> all of our restaurants (aka no need for an ID)
+# member    -> one of our restaurants (aka need the id in the URL)
 
-# <%= link_to 'Home', restaurants_path %>
-# <%= link_to 'Home', restaurant_path(restaurant), method: :delete %>
-# <%= form restaurants_path method="post"%>
-#
-# <a href="restaurants_path"
-# form restaurants_path method="post"
+## This is a custom non-CRUD route
+# get "/restaurants/top", to: "restaurants#top", as: :top_restaurants
+
+
+# do
+#   collection do
+#     # http verb / action
+#     get :top
+#   end
+#   member do
+#     get :menu
+#     get :navigate
+#   end
+# end

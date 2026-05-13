@@ -1,0 +1,5 @@
+<div class="container">
+  <h1><%= @restaurant.name %></h1>
+  <p>Menu: <%= @restaurant.category %></p>
+  <%= link_to 'Back', restaurant_path(@restaurant), class: 'btn btn-success'  %>
+</div>

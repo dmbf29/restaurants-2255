@@ -1,4 +1,17 @@
 class RestaurantsController < ApplicationController
+  # '/restaurants/top'
+  def top
+    @restaurants = Restaurant.where(rating: 5)
+    # render 'top.html.erb'
+  end
+
+  # '/restaurants/ACTUAL_ID/menu'
+  def menu
+    @restaurant = Restaurant.find(params[:id])
+  end
+
+  # CRUD 👇
+
   # '/restaurants'
   def index
     @restaurants = Restaurant.all
