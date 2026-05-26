@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_13_004941) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_25_082905) do
   create_table "restaurants", force: :cascade do |t|
     t.string "address"
     t.string "category"
@@ -18,6 +18,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_004941) do
     t.string "name"
     t.integer "rating"
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_restaurants_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -28,5 +30,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_13_004941) do
     t.index ["restaurant_id"], name: "index_reviews_on_restaurant_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
+    t.datetime "updated_at", null: false
+    t.string "username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  add_foreign_key "restaurants", "users"
   add_foreign_key "reviews", "restaurants"
 end
